@@ -1,0 +1,14 @@
+{
+  "handsPath": {
+    "alias": "h",
+    "describe": "Hands file path"
+  },
+  "password": {
+    "alias": "p",
+    "describe": "Password"
+  },
+  "logLevel": {
+    "alias": "l",
+    "describe": "Logging level (error, warn, info, verbose, debug, silly)"
+  }
+}
