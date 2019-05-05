@@ -15,6 +15,6 @@
     "name": "fileStreamPath",
     "describe": "Hands file path",
     "message": "Hands file path",
-    "default": "../poker-hands.txt"
+    "default": "poker-hands.txt"
   }
 ]

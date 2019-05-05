@@ -19,10 +19,10 @@
     "release": "npm test && npm run babel && ./node_modules/.bin/release-it -c config/release.json"
   },
   "dependencies": {
+    "inquirer": "^1.2.2",
     "line-reader": "^0.4.0",
     "nquirer": "0.1.8",
-    "winston": "2.3.0",
-    "inquirer": "^1.2.2"
+    "winston": "2.3.0"
   },
   "devDependencies": {
     "babel-cli": "6.22.2",

@@ -48,6 +48,16 @@ export default class Rank {
     return handCount;
   }
 
+  getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+  }
+
+  getValueOfRank(numberOfCardsOnRank) {
+    const handCount = this.getRepeatedValues();
+    const valueHighestCard = this.getKeyByValue(handCount, numberOfCardsOnRank);
+    return CARD_VALUES.indexOf(valueHighestCard);
+  }
+
   isFlush() {
     const suits = [...new Set(this.hand.map(card => {
       const cardObj = new Card(card);

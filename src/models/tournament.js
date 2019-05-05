@@ -2,9 +2,10 @@ import * as lineReader from 'line-reader';
 
 export default class Tournament {
   constructor() {
-    this.defaultTournamenFileStream = '../data/poker-hands.txt';
+    this.defaultTournamenFileStream = 'poker-hands.txt';
     this.pointsPlayerOne = 0;
     this.pointsPlayerTwo = 0;
+    this.finalScore = { player1: this.pointsPlayerOne, player2: this.pointsPlayerTwo };
   }
 
   handleTournamentFileStream() {

@@ -3,6 +3,7 @@ import Inquirer from 'inquirer';
 import winston from 'winston';
 
 import * as lineReader from 'line-reader';
+import { PLAYER_2 } from '../babel/constants';
 
 import Player from './models/player';
 import Table from './models/table';
@@ -27,32 +28,20 @@ export class Job {
     // https://github.com/winstonjs/winston#logging-levels
     winston.level = nconf.get('logLevel');
 
-    // Prompt for missing configurations via Inquirer questions.
-    // Questions passed directly to Inquirer.
-    // https://github.com/SBoudrias/Inquirer.js#questions
-
-    // necessitate([{
-    //   type: 'string',
-    //   name: 'handsPath',
-    //   message: 'Hands file path'
-    // }]);
-
   }
 
   readFile(answers) {
     const tournament = new Tournament();
 
-    lineReader.eachLine(answers.fileStreamPath, async (line) => {
+    lineReader.eachLine(`../${answers.fileStreamPath}`, async (line) => {
 
       const table = new Table(line);
 
       const playerOne = new Player(table.handPlayerOne, answers.player1);
       const playerTwo = new Player(table.handPlayerTwo, answers.player2);
 
-      console.log(line);
-
       if (table.winner) {
-        table.winner === 'player2' ? tournament.pointsPlayerTwo++ : tournament.pointsPlayerOne++;
+        table.winner === PLAYER_2 ? tournament.pointsPlayerTwo++ : tournament.pointsPlayerOne++;
       }
 
       console.log(`                                                   `);
@@ -66,6 +55,7 @@ export class Job {
       console.log(`                      V                            `);
       console.log(`---------------------------------------------------`);
 
+      winston.log('info', `Table: ${line}`);
       winston.log('info', `Table Winner: ${JSON.stringify(table.winner)}`);
       winston.log('info', `Player 1: ${JSON.stringify(playerOne.combinations)}`);
       winston.log('info', `Player 2: ${JSON.stringify(playerTwo.combinations)}`);
@@ -77,7 +67,6 @@ export class Job {
       winston.log('info', answers.player1 + ' points:' + tournament.pointsPlayerOne);
       winston.log('info', answers.player2 + ' points:' + tournament.pointsPlayerTwo);
       winston.log('info', 'Job complete.');
-
     });
   }
 
