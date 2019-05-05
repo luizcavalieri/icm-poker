@@ -14,6 +14,9 @@ import defaultConfig from '../config/default-config.json';
 
 export class Job {
 
+  /**
+   * Configure environment variables and start winston logger
+   * */
   configure() {
 
     // Default nconf configuration
@@ -30,9 +33,12 @@ export class Job {
 
   }
 
-  readFile(answers) {
+  /**
+   * Receive answers from prompts, calculate winners and show messages
+   * @param answers
+   * */
+  processFileWithMessages(answers) {
     const tournament = new Tournament();
-
     lineReader.eachLine(`../poker-hands.txt`, async (line) => {
 
       const table = new Table(line);
@@ -71,11 +77,16 @@ export class Job {
     });
   }
 
+  /**
+   * Entry point of App
+   * @return {* | PromiseLike<T | never> | Promise<T | never>}
+   * */
   run() {
+
     // Prompt for missing configurations and continue with application logic...
     const prompt = Inquirer.createPromptModule();
     return prompt(argvConfig).then(answers => {
-      this.readFile(answers);
+      this.processFileWithMessages(answers);
     });
   }
 }

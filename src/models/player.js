@@ -1,8 +1,8 @@
-/**
- * Player class
- * */
 import Rank from './rank';
 
+/**
+ * Player class used to instantiate player object
+ * */
 export default class Player {
   constructor(hand, name) {
     const rank = new Rank(hand);

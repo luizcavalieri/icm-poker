@@ -20,36 +20,49 @@ export default class Table {
     return rank.combinations;
   }
 
+  /**
+   * Get the winner --> can be refactored and some calculations can be sent to its class
+   * @return {string}
+   * */
   getWinner() {
     const players = { player1: [], player2: [] };
+
+    // Get array of ranks sorted in crescent order
     players.player1 = this.resultPlayerOne.map(rank => {
       return RANKS.indexOf(rank);
     }).sort((a, b) => b - a);
-
     players.player2 = this.resultPlayerTwo.map(rank => {
       return RANKS.indexOf(rank);
     }).sort((a, b) => b - a);
 
+    // Get the first highest number
     const highestRankPlayer1 = Math.max(players.player1);
     const highestRankPlayer2 = Math.max(players.player2);
 
     let winner = null;
+
+    // Set if the winner was found
     let hasFoundWinner = false;
 
+    // Check if there is draw in the ranks
     if (highestRankPlayer1 !== highestRankPlayer2) {
       highestRankPlayer2 > highestRankPlayer1 ? winner = PLAYER_2 : winner = PLAYER_1;
       hasFoundWinner = true;
+
+      // Check if the highest ranks are the same
     } else if (
       this.resultPlayerTwo.length
       && this.resultPlayerOne.length
       && this.resultPlayerTwo[0] === this.resultPlayerOne[0]
     ) {
+
+
       const rankPlayer1 = new Rank(this.handPlayerOne);
       const rankPlayer2 = new Rank(this.handPlayerTwo);
       let highestRankValuePlayerOne = 0;
       let highestRankValuePlayerTwo = 0;
 
-      // Evaluate the highest rank between the two players in case draw the ranks
+      // Evaluate the highest rank between the two players in case draw in the ranks
       switch (this.resultPlayerTwo[0]) {
         case 'PAIR':
           highestRankValuePlayerOne = rankPlayer1.getValueOfRank(2);
@@ -72,8 +85,8 @@ export default class Table {
       hasFoundWinner = true;
     }
 
+    // Check what is the highest number if no player has a rank or if the ranks are the same
     if (!hasFoundWinner) {
-      //  Check what is the highest number
       const arrayOfIndexesPlayer1 = this.handPlayerOne.map((card) => {
         const cardCheckingPlayer1 = new Card(card);
         return CARD_VALUES.indexOf(cardCheckingPlayer1.value);
