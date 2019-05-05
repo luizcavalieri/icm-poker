@@ -9,10 +9,6 @@ export default class Player {
     this.hand = hand;
     this.name = name;
     this.combinations = rank.combinations;
-    this.points = this.calculatePoints();
-  }
-
-  calculatePoints() {
-    // add points to player
+    this.points = 0;
   }
 }

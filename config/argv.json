@@ -10,11 +10,5 @@
     "describe": "player2",
     "message": "Please give me the name of the 2nd Player",
     "default": "Player2"
-  },
-  {
-    "name": "fileStreamPath",
-    "describe": "Hands file path",
-    "message": "Hands file path",
-    "default": "poker-hands.txt"
   }
 ]

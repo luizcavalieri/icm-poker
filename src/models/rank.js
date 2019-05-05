@@ -8,6 +8,7 @@ export default class Rank {
     this.combinations = this.getCombinations();
   }
 
+  // Create array with all the combinations from players hands
   getCombinations() {
     const combinationArray = [];
     if (this.isRoyalFlush()) combinationArray.push('ROYAL_FLUSH');
@@ -57,6 +58,10 @@ export default class Rank {
     const valueHighestCard = this.getKeyByValue(handCount, numberOfCardsOnRank);
     return CARD_VALUES.indexOf(valueHighestCard);
   }
+
+  /**
+   * Following methods are testing against each type of rank.
+   * */
 
   isFlush() {
     const suits = [...new Set(this.hand.map(card => {

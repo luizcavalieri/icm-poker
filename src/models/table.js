@@ -74,7 +74,6 @@ export default class Table {
 
     if (!hasFoundWinner) {
       //  Check what is the highest number
-
       const arrayOfIndexesPlayer1 = this.handPlayerOne.map((card) => {
         const cardCheckingPlayer1 = new Card(card);
         return CARD_VALUES.indexOf(cardCheckingPlayer1.value);
@@ -87,6 +86,7 @@ export default class Table {
       let highestCardPlayer1 = Math.max(...arrayOfIndexesPlayer1);
       let highestCardPlayer2 = Math.max(...arrayOfIndexesPlayer2);
 
+      // Keep checking until finding the highest card in the table
       while (highestCardPlayer2 === highestCardPlayer1) {
         highestCardPlayer1 = Math.max(...arrayOfIndexesPlayer1.splice(arrayOfIndexesPlayer1.indexOf(highestCardPlayer1), 1));
         highestCardPlayer2 = Math.max(...arrayOfIndexesPlayer2.splice(arrayOfIndexesPlayer2.indexOf(highestCardPlayer2), 1));
