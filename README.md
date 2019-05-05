@@ -13,6 +13,8 @@ download all the external packages used for this project.
 value, or just accept the default values.
 
 
-## Contribution
+## Results
 
-Contribution documentation can be found [here](CONTRIBUTING.md).
+<p align="center">
+  <img width="300px" height="auto" src="https://raw.githubusercontent.com/luizcavalieri/icm-poker/master/results.png" />
+</p>
