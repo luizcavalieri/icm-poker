@@ -59,18 +59,17 @@ export default class Rank {
   isStraight() {
     // Order by first character based on the value order
     const valuesSorted = this.sortValues();
-    let hasStarted = false;
-    const isSequence = valuesSorted.reduce((accumulator, value, index, array) => {
-      const currentValueIndex = CARD_VALUES.indexOf(value);
-      const previousValueIndex = (
-        !hasStarted ? CARD_VALUES.indexOf(accumulator) : CARD_VALUES.indexOf(array[index - 1])
+
+    const isAllCardsDifferent = [...new Set(valuesSorted)];
+    if (isAllCardsDifferent.length !== 5) return false;
+
+    return isAllCardsDifferent.every((num, i) => {
+      const indexOfCurrentNumber = CARD_VALUES.indexOf(isAllCardsDifferent[i]);
+      const indexOfNextNumber = CARD_VALUES.indexOf(isAllCardsDifferent[i + 1]);
+      return (
+        i === isAllCardsDifferent.length - 1 || indexOfNextNumber - indexOfCurrentNumber === 1
       );
-      const difference = currentValueIndex - previousValueIndex;
-      const result = !hasStarted ? parseInt(difference) : parseInt(difference) + accumulator;
-      hasStarted = true;
-      return result;
     });
-    return isSequence === valuesSorted.length - 1;
   }
 
   isStraightFlush() {

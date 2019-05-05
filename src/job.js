@@ -1,12 +1,15 @@
 import { nconf, necessitate, inquire } from 'nquirer';
+import Inquirer from 'inquirer';
 import winston from 'winston';
 
-import Card from './models/card';
+import * as lineReader from 'line-reader';
+
 import Player from './models/player';
 import Table from './models/table';
 
 import argvConfig from '../config/argv.json';
 import defaultConfig from '../config/default-config.json';
+import Tournament from './models/tournament';
 
 export class Job {
 
@@ -36,37 +39,55 @@ export class Job {
 
   }
 
-  run() {
-    // Prompt for missing configurations and continue with application logic...
-    return inquire().then(nconf => {
-      const handsPath = nconf.get('handsPath');
+  readFile(answers) {
+    const tournament = new Tournament();
 
-      const table = new Table('TS TH TS TC QC QS TH AC AD AH');
+    lineReader.eachLine(answers.fileStreamPath, async (line) => {
 
-      const playerOne = new Player(table.handPlayerOne);
-      const playerTwo = new Player(table.handPlayerTwo);
+      const table = new Table(line);
 
-      console.log(`###################################################`);
+      const playerOne = new Player(table.handPlayerOne, answers.player1);
+      const playerTwo = new Player(table.handPlayerTwo, answers.player2);
+
+      console.log(line);
+
+      if (table.winner) {
+        table.winner === 'player2' ? tournament.pointsPlayerTwo++ : tournament.pointsPlayerOne++;
+      }
+
+      console.log(`                                                   `);
       console.log(`###################################################`);
       console.log(`---------------------------------------------------`);
-      console.log(`                                                   `);
-      console.log(`######## THIS IS THE ICM CONSULTING POKER #########`);
+      console.log(`########       ICM CONSULTING POKER       #########`);
       console.log(`---------------------------------------------------`);
       console.log(`                      |                            `);
       console.log(`                      |                            `);
       console.log(`                      |                            `);
       console.log(`                      V                            `);
-      console.log(`                                                   `);
+      console.log(`---------------------------------------------------`);
 
       winston.log('info', `Table Winner: ${JSON.stringify(table.winner)}`);
       winston.log('info', `Player 1: ${JSON.stringify(playerOne.combinations)}`);
       winston.log('info', `Player 2: ${JSON.stringify(playerTwo.combinations)}`);
 
+      console.log(`---------------------------------------------------`);
+      console.log(`###################################################`);
+      console.log(`                                                   `);
+
+      winston.log('info', answers.player1 + ' points:' + tournament.pointsPlayerOne);
+      winston.log('info', answers.player2 + ' points:' + tournament.pointsPlayerTwo);
       winston.log('info', 'Job complete.');
-      return [handsPath];
+
     });
   }
 
+  run() {
+    // Prompt for missing configurations and continue with application logic...
+    const prompt = Inquirer.createPromptModule();
+    return prompt(argvConfig).then(answers => {
+      this.readFile(answers);
+    });
+  }
 }
 
 const instance = new Job();

@@ -1,14 +1,20 @@
-{
-  "handsPath": {
-    "alias": "h",
-    "describe": "Hands file path"
+[
+  {
+    "name": "player1",
+    "describe": "player1",
+    "message": "Please give me the name of the 1st Player",
+    "default": "Player1"
   },
-  "password": {
-    "alias": "p",
-    "describe": "Password"
+  {
+    "name": "player2",
+    "describe": "player2",
+    "message": "Please give me the name of the 2nd Player",
+    "default": "Player2"
   },
-  "logLevel": {
-    "alias": "l",
-    "describe": "Logging level (error, warn, info, verbose, debug, silly)"
+  {
+    "name": "fileStreamPath",
+    "describe": "Hands file path",
+    "message": "Hands file path",
+    "default": "../poker-hands.txt"
   }
-}
+]

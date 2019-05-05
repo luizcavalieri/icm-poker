@@ -1,4 +1,4 @@
-import { RANKS } from '../constants';
+import { CARD_VALUES, RANKS } from '../constants';
 import Rank from './rank';
 
 /**
@@ -29,12 +29,40 @@ export default class Table {
       return RANKS.indexOf(rank);
     }).sort((a, b) => b - a);
 
-    const biggerPlayer1 = Math.max(players.player1);
-    const biggerPlayer2 = Math.max(players.player2);
+    const highestRankPlayer1 = Math.max(players.player1);
+    const highestRankPlayer2 = Math.max(players.player2);
     let winner = null;
+    let hasFoundWinner = false;
 
-    if (biggerPlayer1 !== biggerPlayer2) {
-      biggerPlayer2 > biggerPlayer1 ? winner = 'player2' : winner = 'player1';
+    if (highestRankPlayer1 !== highestRankPlayer2) {
+      highestRankPlayer2 > highestRankPlayer1 ? winner = 'player2' : winner = 'player1';
+      hasFoundWinner = true;
+    } else if (this.resultPlayerTwo[0] === this.resultPlayerOne[0]) {
+      console.log('Hand Players', this.resultPlayerTwo[0]);
+      switch (this.resultPlayerTwo[0]) {
+        case 'PAIRS':
+          break;
+        case 'TWO_PAIRS':
+          break;
+        case 'THREE_OF_A_KIND':
+          break;
+        case 'FOUR_OF_A_KIND':
+          break;
+      }
+      hasFoundWinner = true;
+    } else {
+      hasFoundWinner = false;
+    }
+
+    if (!hasFoundWinner) {
+      //  Check what is the highest number
+      const highestCardPlayer1 = Math.max(
+        ...this.handPlayerTwo.map((card) => CARD_VALUES.indexOf(card))
+      );
+      const highestCardPlayer2 = Math.max(
+        ...this.handPlayerOne.map((card) => CARD_VALUES.indexOf(card))
+      );
+      highestCardPlayer2 > highestCardPlayer1 ? winner = 'player2' : winner = 'player1';
     }
 
     return winner;
